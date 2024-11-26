@@ -22,9 +22,9 @@ public class Meter {
     private long id;
 
     @Column(unique = true, nullable = false)
-    private String serialNo;
+    private String serialNo; //serial_no
     @Column(nullable = false)
-    private LocalDate installationDate;
+    private LocalDate installationDate; //installation_date
     @Column(length = 500, nullable = false)
     private String location;
     @Column(nullable = false)
