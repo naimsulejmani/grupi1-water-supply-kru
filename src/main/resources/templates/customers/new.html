@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/_layout::layout('Home Page', ~{::#naja}, null, null)}">
+
+
+<div id="naja">
+    <h2 class="card-title">Consumer Registration Form</h2>
+    <hr/>
+    <div class="card">
+        <div class="card-body">
+            <!-- General Form Elements -->
+            <form method="post" th:object="${customer}" id="customerForm">
+                <input type="hidden" th:field="*{id}"/>
+                <div class="row mb-3">
+                    <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" th:field="*{firstName}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" th:field="*{lastName}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="companyName" class="col-sm-2 col-form-label">Company Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" th:field="*{companyName}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="address" class="col-sm-2 col-form-label">Address</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" th:field="*{address}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="city" class="col-sm-2 col-form-label">City</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" th:field="*{city}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="zip" class="col-sm-2 col-form-label">Zip</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" th:field="*{zip}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="state" class="col-sm-2 col-form-label">State</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" th:field="*{state}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="email" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" th:field="*{email}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+                    <div class="col-sm-10">
+                        <input type="tel" class="form-control" th:field="*{phone}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="registerDate" class="col-sm-2 col-form-label">Register Date</label>
+                    <div class="col-sm-10">
+                        <!--                        <input type="text" class="form-control"  th:field="*{registeredDate}">-->
+                        <input type="date" class="form-control" th:field="*{registeredDate}"
+                               th:data-dt="*{registeredDate}">
+
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <legend class="col-form-label col-sm-2 pt-0">Is Active</legend>
+                    <div class="col-sm-10">
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck1" th:field="*{active}" `>
+                            <label class="form-check-label" for="gridCheck1">
+                                Active
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Submit Button</label>
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="reset" class="btn btn-danger">Reset</button>
+                        <th:inline th:replace="~{/fragments/_backToPreviousPage.html}"></th:inline>
+                    </div>
+                </div>
+
+            </form><!-- End General Form Elements -->
+
+        </div>
+    </div>
+
+</div>
+</html>

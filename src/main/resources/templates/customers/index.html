@@ -3,7 +3,65 @@
 
 
 <div id="naja">
-    <h1 class="app-page-title">Overview</h1>
+    <h2 class="card-title">Consumer List</h2>
     <hr/>
+    <div class="card">
+        <div class="card-body">
+
+            <div class="mb-3">
+                <a th:href="@{/customers/new}" class="btn btn-sm btn-primary">+ New Customer</a>
+            </div>
+
+            <div class="row" th:unless="${customers.size()>0}">
+                    <hr/>
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Warning!</strong> No customer found.
+                    </div>
+            </div>
+            <!-- Table with hoverable rows -->
+            <table class="table table-hover" th:if="${customers.size()>0}">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Register Date</th>
+                    <th scope="col">IsActive</th>
+                    <th scope="col">(action)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="customer : ${customers}" th:object="${customer}">
+                    <th scope="row" th:text="*{id}"></th>
+                    <td>
+                        <span th:if="*{companyName!=null && !companyName.isBlank()}" th:text="*{companyName}"></span>
+                        <span th:unless="*{companyName!=null && !companyName.isBlank()}">
+                            <span th:text="*{firstName}"></span> &nbsp;
+                            <span th:text="*{lastName}"></span>
+                        </span>
+                    </td>
+                    <td th:text="*{address}"></td>
+                    <td th:text="*{registeredDate}"></td>
+                    <td>
+                        <span th:if="*{isActive}">Yes</span>
+                        <span th:unless="*{isActive}">No</span>
+<!--                        <br/>-->
+<!--                        <input type="checkbox" disabled th:checked="*{active}"-->
+<!--                        style="width: 25px; height: 25px;"/>-->
+                    </td>
+                    <td>
+                        <a th:href="@{/customers/{id}/details(id=*{id})}" class="btn btn-sm btn-secondary">Details</a>
+                        <a th:href="@{/customers/{id}/edit(id=*{id})}" class="btn btn-sm btn-warning">Edit</a>
+                        <a th:href="@{/customers/{id}/delete(id=*{id})}" class="btn btn-sm btn-danger">Delete</a>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!-- End Table with hoverable rows -->
+
+        </div>
+    </div>
+
 </div>
 </html>

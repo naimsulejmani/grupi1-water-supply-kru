@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/_layout::layout('Home Page', ~{::#naja}, null, null)}">
+
+
+<div id="naja">
+    <h2 class="card-title">Consumer Registration Form</h2>
+    <hr/>
+    <div class="card">
+        <div class="card-body">
+            <!-- General Form Elements -->
+
+            <th:block th:replace="~{/customers/new.html::#customerForm}" th:if="${customer!=null}">
+
+            </th:block>
+
+            <div th:unless="${customer!=null}">
+                <th:inline th:replace="~{/fragments/_backToPreviousPage.html}"></th:inline>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</html>
