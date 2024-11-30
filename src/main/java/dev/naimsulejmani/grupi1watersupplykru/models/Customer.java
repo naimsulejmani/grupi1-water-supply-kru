@@ -45,9 +45,9 @@ public class Customer {
     @Column(nullable = false)
     private boolean active = true;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 50, updatable = false)
     private String createdBy = "admin";
     private LocalDateTime modifiedAt;
     @Column(length = 50)

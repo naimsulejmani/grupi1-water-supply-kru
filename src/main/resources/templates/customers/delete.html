@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/_layout::layout('Home Page', ~{::#naja}, null, null)}">
+
+
+<div id="naja">
+    <h2 class="card-title">Consumer Details
+        <th:inline th:replace="~{/fragments/_backToPreviousPage.html}"></th:inline>
+    </h2>
+
+    <hr/>
+
+    <th:block th:replace="~{/customers/detail.html::div.card}">
+
+    </th:block>
+
+    <div th:if="${customer!=null}">
+        <hr/>
+        <form method="post">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+
+
+</div>
+</html>

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @Controller
 @RequestMapping("/customers")
 public class CustomerController {
@@ -43,10 +45,31 @@ public class CustomerController {
 
     @PostMapping("/{id}/edit")
     public String editCustomer(@ModelAttribute Customer customer) {
+        customer.setModifiedAt(LocalDateTime.now());
+        customer.setModifiedBy("admin");
         customerService.modify(customer);
         return "redirect:/customers";
     }
 
+    @GetMapping("{id}/details")
+    public String detailCustomer(Model model, @PathVariable Long id) {
+        var customer = customerService.findById(id);
+        model.addAttribute("customer", customer);
+        return "customers/detail";
+    }
+
+    @GetMapping("{id}/delete")
+    public String deleteCustomer(Model model, @PathVariable Long id) {
+        var customer = customerService.findById(id);
+        model.addAttribute("customer", customer);
+        return "customers/delete";
+    }
+
+    @PostMapping("{id}/delete")
+    public String deleteCustomer(@PathVariable Long id) {
+        customerService.deleteById(id);
+        return "redirect:/customers";
+    }
 }
 
 

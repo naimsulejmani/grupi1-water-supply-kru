@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/_layout::layout('Home Page', ~{::#naja}, null, null)}">
+
+
+<div id="naja">
+    <h2 class="card-title">Consumer Details
+        <th:inline th:replace="~{/fragments/_backToPreviousPage.html}"></th:inline>
+    </h2>
+
+    <hr/>
+    <div class="card">
+
+        <div class="card-body" th:unless="${customer!=null}">
+            <div class="alert alert-danger" role="alert">
+                Customer not found.
+            </div>
+        </div>
+
+        <div class="card-body" th:if="${customer!=null}">
+
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    <strong>First Name</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span th:text="${customer.firstName}"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    <strong>Last Name</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span th:text="${customer.lastName}"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    <strong>Company Name</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span th:text="${customer.companyName}"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    <strong>Address</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span th:text="${customer.address}"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    <strong>City</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span th:text="${customer.city}"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    <strong>Staate</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span th:text="${customer.state}"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    <strong>Zip</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span th:text="${customer.zip}"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    <strong>Email</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span th:text="${customer.email}"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    <strong>Phone</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span th:text="${customer.phone}"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    <strong>Register Date</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span th:text="${customer.registeredDate}"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    <strong>Active</strong>
+                </div>
+                <div class="col-sm-10">
+                    <i th:class="${customer.active} ? 'fa-solid fa-check' : 'fa-solid fa-xmark'"></i>
+                    <span th:text="${customer.active ? 'Active' : 'Inactive'}"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    <strong>Created Date</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span th:text="${customer.createdAt}"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    <strong>Created By</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span th:text="${customer.createdBy}"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    <strong>Updated Date</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span th:text="${customer.modifiedAt}"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    <strong>Updated By</strong>
+                </div>
+                <div class="col-sm-10">
+                    <span th:text="${customer.modifiedBy}"></span>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+
+</div>
+</html>
