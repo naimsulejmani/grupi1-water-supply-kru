@@ -10,10 +10,16 @@
             <!-- General Form Elements -->
             <form method="post" th:object="${customer}" id="customerForm">
                 <input type="hidden" th:field="*{id}"/>
+                <div class="col-sm-10">
+                    <span class="text-danger" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
+                </div>
                 <div class="row mb-3">
                     <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" th:field="*{firstName}">
+                    </div>
+                    <div class="col-sm-10">
+                        <span class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -21,11 +27,17 @@
                     <div class="col-sm-10">
                         <input type="text" class="form-control" th:field="*{lastName}">
                     </div>
+                    <div class="col-sm-10">
+                        <span class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+                    </div>
                 </div>
                 <div class="row mb-3">
                     <label for="companyName" class="col-sm-2 col-form-label">Company Name</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" th:field="*{companyName}">
+                    </div>
+                    <div class="col-sm-10">
+                        <span class="text-danger" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -33,11 +45,17 @@
                     <div class="col-sm-10">
                         <input type="text" class="form-control" th:field="*{address}">
                     </div>
+                    <div class="col-sm-10">
+                        <span class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+                    </div>
                 </div>
                 <div class="row mb-3">
                     <label for="city" class="col-sm-2 col-form-label">City</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" th:field="*{city}">
+                    </div>
+                    <div class="col-sm-10">
+                        <span class="text-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -45,11 +63,17 @@
                     <div class="col-sm-10">
                         <input type="text" class="form-control" th:field="*{zip}">
                     </div>
+                    <div class="col-sm-10">
+                        <span class="text-danger" th:if="${#fields.hasErrors('zip')}" th:errors="*{zip}"></span>
+                    </div>
                 </div>
                 <div class="row mb-3">
                     <label for="state" class="col-sm-2 col-form-label">State</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" th:field="*{state}">
+                    </div>
+                    <div class="col-sm-10">
+                        <span class="text-danger" th:if="${#fields.hasErrors('state')}" th:errors="*{state}"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -57,18 +81,26 @@
                     <div class="col-sm-10">
                         <input type="email" class="form-control" th:field="*{email}">
                     </div>
+                    <div class="col-sm-10">
+                        <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                    </div>
                 </div>
                 <div class="row mb-3">
                     <label for="phone" class="col-sm-2 col-form-label">Phone</label>
                     <div class="col-sm-10">
                         <input type="tel" class="form-control" th:field="*{phone}">
                     </div>
+                    <div class="col-sm-10">
+                        <span class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+                    </div>
                 </div>
                 <div class="row mb-3">
                     <label for="registerDate" class="col-sm-2 col-form-label">Register Date</label>
                     <div class="col-sm-10">
                         <input type="date" class="form-control" name="registeredDate" id="registeredDate" th:value="*{registeredDate}">
-
+                    </div>
+                    <div class="col-sm-10">
+                        <span class="text-danger" th:if="${#fields.hasErrors('registeredDate')}" th:errors="*{registeredDate}"></span>
                     </div>
                 </div>
 

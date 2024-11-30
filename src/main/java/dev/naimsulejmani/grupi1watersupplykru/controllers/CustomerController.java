@@ -2,9 +2,14 @@ package dev.naimsulejmani.grupi1watersupplykru.controllers;
 
 import dev.naimsulejmani.grupi1watersupplykru.models.Customer;
 import dev.naimsulejmani.grupi1watersupplykru.services.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +23,12 @@ public class CustomerController {
     }
 
     @GetMapping("")
-    public String index(Model model) {
+    public String index(Model model, @RequestParam(required = false) String error) {
+        if (error != null) {
+            if (error.equals("SUCCESS")) {
+                model.addAttribute("success", "Customer added successfully!");
+            }
+        }
         var customers = customerService.findAll();
         model.addAttribute("customers", customers);
         return "customers/index";
@@ -31,10 +41,17 @@ public class CustomerController {
     }
 
     @PostMapping("/new")
-    public String newCustomer(@ModelAttribute Customer customer) {
+    public String newCustomer(@Valid @ModelAttribute Customer customer, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(System.out::println);
+            return "customers/new";
+        }
+
         customerService.add(customer);
+        redirectAttributes.addAttribute("error", "SUCCESS");
         return "redirect:/customers";
     }
+
 
     @GetMapping("/{id}/edit")
     public String editCustomer(Model model, @PathVariable Long id) {
@@ -44,7 +61,22 @@ public class CustomerController {
     }
 
     @PostMapping("/{id}/edit")
-    public String editCustomer(@ModelAttribute Customer customer) {
+    public String editCustomer(@Valid @ModelAttribute Customer customer, BindingResult bindingResult, @PathVariable Long id, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(System.out::println);
+            return "customers/edit";
+        }
+
+        if (customer.getId() != id) {
+            bindingResult.addError(new ObjectError("customer", "Customer ID mismatch!"));
+            return "customers/edit";
+//            // shto nje atribut ne URL qe tregon gabimin
+//            //
+//            redirectAttributes.addAttribute("error", "CS404");
+//            // shto nje objjekt ne faqen qe po e ridireton
+//            redirectAttributes.addFlashAttribute("error", "Customer ID mismatch!");
+//            return "redirect:/customers";
+        }
         customer.setModifiedAt(LocalDateTime.now());
         customer.setModifiedBy("admin");
         customerService.modify(customer);

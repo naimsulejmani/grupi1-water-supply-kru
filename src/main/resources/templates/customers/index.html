@@ -8,6 +8,15 @@
     <div class="card">
         <div class="card-body">
 
+            <div >
+                <div class="alert alert-danger" role="alert" th:if="${error!=null}">
+                    <strong>Error!</strong> <span th:text="${error}"></span>
+                </div>
+                <div class="alert alert-    success" role="alert" th:if="${success!=null}">
+                    <strong>Info: </strong> <span th:text="${success}"></span>
+                </div>
+            </div>
+
             <div class="mb-3">
                 <a th:href="@{/customers/new}" class="btn btn-sm btn-primary">+ New Customer</a>
             </div>
