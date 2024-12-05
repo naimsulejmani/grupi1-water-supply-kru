@@ -48,7 +48,8 @@ public class CustomerController {
         }
 
         customerService.add(customer);
-        redirectAttributes.addAttribute("error", "SUCCESS");
+        redirectAttributes.addAttribute("errorId", "SUCCESS");
+        redirectAttributes.addFlashAttribute("success", "Consumer Successfully registererd!");
         return "redirect:/customers";
     }
 
@@ -68,14 +69,14 @@ public class CustomerController {
         }
 
         if (customer.getId() != id) {
-            bindingResult.addError(new ObjectError("customer", "Customer ID mismatch!"));
-            return "customers/edit";
+//            bindingResult.addError(new ObjectError("customer", "Customer ID mismatch!"));
+//            return "customers/edit";
 //            // shto nje atribut ne URL qe tregon gabimin
 //            //
-//            redirectAttributes.addAttribute("error", "CS404");
-//            // shto nje objjekt ne faqen qe po e ridireton
-//            redirectAttributes.addFlashAttribute("error", "Customer ID mismatch!");
-//            return "redirect:/customers";
+            redirectAttributes.addAttribute("errorId", "CS404");
+            // shto nje objjekt ne faqen qe po e ridireton
+            redirectAttributes.addFlashAttribute("error", "Customer ID mismatch!");
+            return "redirect:/customers";
         }
         customer.setModifiedAt(LocalDateTime.now());
         customer.setModifiedBy("admin");

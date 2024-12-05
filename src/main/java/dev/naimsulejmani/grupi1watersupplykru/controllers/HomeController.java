@@ -3,7 +3,7 @@ package dev.naimsulejmani.grupi1watersupplykru.controllers;
 
 import dev.naimsulejmani.grupi1watersupplykru.enums.MeterType;
 import dev.naimsulejmani.grupi1watersupplykru.models.Meter;
-import dev.naimsulejmani.grupi1watersupplykru.services.MeterService;
+import dev.naimsulejmani.grupi1watersupplykru.services.MeterServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -12,9 +12,9 @@ import java.util.Random;
 
 @Controller
 public class HomeController {
-    private final MeterService meterService;
+    private final MeterServiceImpl meterService;
 
-    public HomeController(MeterService meterService) {
+    public HomeController(MeterServiceImpl meterService) {
         this.meterService = meterService;
     }
 
