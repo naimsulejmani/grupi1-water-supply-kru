@@ -32,6 +32,7 @@
                 <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Image</th>
                     <th scope="col">Name</th>
                     <th scope="col">Address</th>
                     <th scope="col">Register Date</th>
@@ -42,6 +43,7 @@
                 <tbody>
                 <tr th:each="customer : ${customers}" th:object="${customer}">
                     <th scope="row" th:text="*{id}"></th>
+                    <td><img th:src="*{documentUrl}" style="width: 60px; height: 60px; border-radius: 25%"/></td>
                     <td>
                         <span th:if="*{companyName!=null && !companyName.isBlank()}" th:text="*{companyName}"></span>
                         <span th:unless="*{companyName!=null && !companyName.isBlank()}">

@@ -1,25 +1,28 @@
 package dev.naimsulejmani.grupi1watersupplykru.controllers;
 
+import dev.naimsulejmani.grupi1watersupplykru.helpers.FileHelper;
 import dev.naimsulejmani.grupi1watersupplykru.models.Customer;
 import dev.naimsulejmani.grupi1watersupplykru.services.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/customers")
 public class CustomerController {
     private final CustomerService customerService;
+    private final FileHelper fileHelper;
 
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService, FileHelper fileHelper) {
         this.customerService = customerService;
+        this.fileHelper = fileHelper;
     }
 
     @GetMapping("")
@@ -37,15 +40,37 @@ public class CustomerController {
     @GetMapping("/new")
     public String newCustomer(Model model) {
         model.addAttribute("customer", new Customer());
+        model.addAttribute("fromDate", LocalDate.now().minusMonths(3));
+        model.addAttribute("toDate", LocalDate.now());
         return "customers/new";
     }
 
     @PostMapping("/new")
-    public String newCustomer(@Valid @ModelAttribute Customer customer, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String newCustomer(
+            @Valid @ModelAttribute Customer customer
+            , BindingResult bindingResult
+            , RedirectAttributes redirectAttributes
+            , @RequestParam("documentFile") MultipartFile documentFile) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(System.out::println);
             return "customers/new";
         }
+
+        System.out.println("Document file: " + documentFile.getOriginalFilename());
+
+        if (!documentFile.isEmpty()) {
+            try {
+                String newFilename = fileHelper.uploadFile("target/classes/static/assets/images/customers",
+                        documentFile.getOriginalFilename(), documentFile.getBytes());
+
+                if (newFilename != null) {
+                    customer.setDocumentUrl("/assets/images/customers/" + newFilename);
+                }
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex.getMessage());
+            }
+        }
+
 
         customerService.add(customer);
         redirectAttributes.addAttribute("errorId", "SUCCESS");
@@ -62,7 +87,12 @@ public class CustomerController {
     }
 
     @PostMapping("/{id}/edit")
-    public String editCustomer(@Valid @ModelAttribute Customer customer, BindingResult bindingResult, @PathVariable Long id, RedirectAttributes redirectAttributes) {
+    public String editCustomer(
+            @Valid @ModelAttribute Customer customer
+            , BindingResult bindingResult
+            , @PathVariable Long id
+            , RedirectAttributes redirectAttributes
+    ,@RequestParam("documentFile") MultipartFile documentFile) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(System.out::println);
             return "customers/edit";
@@ -80,6 +110,21 @@ public class CustomerController {
         }
         customer.setModifiedAt(LocalDateTime.now());
         customer.setModifiedBy("admin");
+
+        if (!documentFile.isEmpty()) {
+            try {
+                String newFilename = fileHelper.uploadFile("target/classes/static/assets/images/customers",
+                        documentFile.getOriginalFilename(), documentFile.getBytes());
+
+                if (newFilename != null) {
+                    customer.setDocumentUrl("/assets/images/customers/" + newFilename);
+                }
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex.getMessage());
+            }
+        }
+
+
         customerService.modify(customer);
         return "redirect:/customers";
     }

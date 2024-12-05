@@ -24,4 +24,17 @@ public interface MeterRepository extends JpaRepository<Meter, Long> {
 
     List<Meter> findAllByLocationAndMeterTypeOrderByCreatedAt(String location, String meterType);
     // SELECT * FROM meters WHERE location = ? AND meter_type = ? ORDER BY created_at;
+
+    List<Meter> findAllByLocationStartingWith(String location); // SELECT * FROM meters WHERE location LIKE ?%;
+
+    Long countAllByLocationContaining(String location); // SELECT COUNT(*) FROM meters WHERE location LIKE %?%;
 }
+
+
+
+
+
+
+
+
+

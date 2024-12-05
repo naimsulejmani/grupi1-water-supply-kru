@@ -65,13 +65,18 @@ public class Customer {
     private String email;
 
     @Column(length = 25)
-    @Size(max=25)
+    @Size(max = 25)
     private String phone;
 
     @Column(nullable = false)
     @PastOrPresent(message = "Data e regjistrimit duhet te jete ne te kaluaren ose ne diten e sotme")
     @NotNull
     private LocalDate registeredDate;
+
+
+    @Column(length = 1000)
+    @Size(max = 1000)
+    private String documentUrl;
 
 
     @Column(nullable = false)

@@ -8,7 +8,7 @@
     <div class="card">
         <div class="card-body">
             <!-- General Form Elements -->
-            <form method="post" th:object="${customer}" id="customerForm">
+            <form method="post" th:object="${customer}" id="customerForm" enctype="multipart/form-data">
                 <input type="hidden" th:field="*{id}"/>
                 <div class="col-sm-10">
                     <span class="text-danger" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
@@ -16,10 +16,12 @@
                 <div class="row mb-3">
                     <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" th:field="*{firstName}" required minlength="3" maxlength="50">
+                        <input type="text" class="form-control" th:field="*{firstName}" required minlength="3"
+                               maxlength="50">
                     </div>
                     <div class="col-sm-10">
-                        <span class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+                        <span class="text-danger" th:if="${#fields.hasErrors('firstName')}"
+                              th:errors="*{firstName}"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -28,7 +30,8 @@
                         <input type="text" class="form-control" th:field="*{lastName}" required>
                     </div>
                     <div class="col-sm-10">
-                        <span class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+                        <span class="text-danger" th:if="${#fields.hasErrors('lastName')}"
+                              th:errors="*{lastName}"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -37,7 +40,8 @@
                         <input type="text" class="form-control" th:field="*{companyName}">
                     </div>
                     <div class="col-sm-10">
-                        <span class="text-danger" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}"></span>
+                        <span class="text-danger" th:if="${#fields.hasErrors('companyName')}"
+                              th:errors="*{companyName}"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -64,7 +68,7 @@
                         <input type="text" class="form-control" th:field="*{zip}" required>
                     </div>
                     <div class="col-sm-10">
-                        <span class="text-danger" th:if="${#fields.hasErrors('zip')}" th:errors="*{zip}" ></span>
+                        <span class="text-danger" th:if="${#fields.hasErrors('zip')}" th:errors="*{zip}"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -97,12 +101,35 @@
                 <div class="row mb-3">
                     <label for="registerDate" class="col-sm-2 col-form-label">Register Date</label>
                     <div class="col-sm-10">
-                        <input type="date" class="form-control" name="registeredDate" id="registeredDate" th:value="*{registeredDate}" required>
+                        <input type="date" class="form-control" name="registeredDate"
+                               id="registeredDate" th:value="*{registeredDate}" required
+                               th:min="${fromDate}"
+                               th:max="${toDate}">
                     </div>
                     <div class="col-sm-10">
-                        <span class="text-danger" th:if="${#fields.hasErrors('registeredDate')}" th:errors="*{registeredDate}"></span>
+                        <span class="text-danger" th:if="${#fields.hasErrors('registeredDate')}"
+                              th:errors="*{registeredDate}"></span>
                     </div>
                 </div>
+
+                <div class="row mb-3" th:if="*{documentUrl!=null && !documentUrl.isBlank()}">
+                   <div class="col-2">
+                       Document Photo:
+                   </div>
+                    <div class="col-10">
+                        <img th:src="*{documentUrl}" style="width: 150px; height: 150px; border-radius: 25%"/>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="documentFile" class="col-sm-2 col-form-label">Document File</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" name="documentFile"
+                               id="documentFile" accept="image/*">
+                        <input type="hidden" th:field="*{documentUrl}"/>
+                    </div>
+                </div>
+
 
                 <div class="row mb-3">
                     <legend class="col-form-label col-sm-2 pt-0">Is Active</legend>
