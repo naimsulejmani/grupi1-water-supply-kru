@@ -1,7 +1,8 @@
-package dev.naimsulejmani.grupi1watersupplykru.services;
+package dev.naimsulejmani.grupi1watersupplykru.services.impls;
 
 import dev.naimsulejmani.grupi1watersupplykru.models.Meter;
 import dev.naimsulejmani.grupi1watersupplykru.repositories.MeterRepository;
+import dev.naimsulejmani.grupi1watersupplykru.services.MeterService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
