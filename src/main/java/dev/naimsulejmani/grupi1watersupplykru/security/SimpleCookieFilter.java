@@ -60,6 +60,8 @@ public class SimpleCookieFilter extends OncePerRequestFilter {
         response.sendRedirect("/login");
 
 
+        //TODO!: Need to check if the user is logged in or not
+        // use session instead of cookies or combined with cookies
     }
 }
 
