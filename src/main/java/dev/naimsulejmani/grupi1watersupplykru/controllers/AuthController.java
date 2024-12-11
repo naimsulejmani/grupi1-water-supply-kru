@@ -3,7 +3,9 @@ package dev.naimsulejmani.grupi1watersupplykru.controllers;
 import dev.naimsulejmani.grupi1watersupplykru.dtos.LoginRequestDto;
 import dev.naimsulejmani.grupi1watersupplykru.services.UserService;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +33,7 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@Valid @ModelAttribute LoginRequestDto loginRequestDto,
                         BindingResult bindingResult,
+                        HttpServletRequest request,
                         HttpServletResponse response,
                         @RequestParam(value = "returnUrl", required = false) String returnUrl) {
         if (bindingResult.hasErrors()) {
@@ -44,6 +47,9 @@ public class AuthController {
             bindingResult.rejectValue("password", "error.loginRequestDto", "Emaili ose passwordi i gabuar!");
             return "auth/login";
         }
+
+        HttpSession session = request.getSession();
+        session.setAttribute("user", userDto);
 
         Cookie cookie = new Cookie("userId", "" + userDto.getId());
         if (loginRequestDto.isRememberMe()) {
@@ -70,10 +76,12 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public String logout(HttpServletResponse response) {
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
         Cookie cookie = new Cookie("userId", "");
         cookie.setMaxAge(0);
         response.addCookie(cookie);
+        HttpSession session = request.getSession();
+        session.invalidate();
         return "redirect:/login";
     }
 }

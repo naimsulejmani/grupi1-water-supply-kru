@@ -1,8 +1,11 @@
 package dev.naimsulejmani.grupi1watersupplykru.controllers;
 
+import dev.naimsulejmani.grupi1watersupplykru.dtos.UserDto;
 import dev.naimsulejmani.grupi1watersupplykru.helpers.FileHelper;
 import dev.naimsulejmani.grupi1watersupplykru.models.Customer;
 import dev.naimsulejmani.grupi1watersupplykru.services.CustomerService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,7 +53,8 @@ public class CustomerController {
             @Valid @ModelAttribute Customer customer
             , BindingResult bindingResult
             , RedirectAttributes redirectAttributes
-            , @RequestParam("documentFile") MultipartFile documentFile) {
+            , @RequestParam("documentFile") MultipartFile documentFile
+    , HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(System.out::println);
             return "customers/new";
@@ -72,6 +76,9 @@ public class CustomerController {
         }
 
 
+        HttpSession session = request.getSession(false);
+        UserDto userDto = (UserDto) session.getAttribute("user");
+        customer.setCreatedBy(userDto.getUsername());
         customerService.add(customer);
         redirectAttributes.addAttribute("errorId", "SUCCESS");
         redirectAttributes.addFlashAttribute("success", "Consumer Successfully registererd!");
