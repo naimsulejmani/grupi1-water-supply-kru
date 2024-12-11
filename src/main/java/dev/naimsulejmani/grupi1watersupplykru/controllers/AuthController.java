@@ -68,4 +68,20 @@ public class AuthController {
     public String register() {
         return "auth/register";
     }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("userId", "");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/login";
+    }
 }
+
+
+
+
+
+
+
+
