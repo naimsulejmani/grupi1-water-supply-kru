@@ -1,6 +1,7 @@
 package dev.naimsulejmani.grupi1watersupplykru.controllers;
 
 import dev.naimsulejmani.grupi1watersupplykru.dtos.LoginRequestDto;
+import dev.naimsulejmani.grupi1watersupplykru.dtos.RegisterUserRequestDto;
 import dev.naimsulejmani.grupi1watersupplykru.services.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.time.LocalDate;
 
 @Controller
 public class AuthController {
@@ -71,7 +74,9 @@ public class AuthController {
     }
 
     @GetMapping("/register")
-    public String register() {
+    public String register(Model model) {
+        model.addAttribute("registerUserRequestDto", new RegisterUserRequestDto());
+        model.addAttribute("maxDate", LocalDate.now().minusYears(18));
         return "auth/register";
     }
 
