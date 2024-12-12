@@ -3,6 +3,7 @@ package dev.naimsulejmani.grupi1watersupplykru.controllers;
 import dev.naimsulejmani.grupi1watersupplykru.dtos.UserDto;
 import dev.naimsulejmani.grupi1watersupplykru.helpers.FileHelper;
 import dev.naimsulejmani.grupi1watersupplykru.models.Customer;
+import dev.naimsulejmani.grupi1watersupplykru.models.User;
 import dev.naimsulejmani.grupi1watersupplykru.services.CustomerService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -54,7 +55,7 @@ public class CustomerController {
             , BindingResult bindingResult
             , RedirectAttributes redirectAttributes
             , @RequestParam("documentFile") MultipartFile documentFile
-    , HttpServletRequest request) {
+            , HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(System.out::println);
             return "customers/new";
@@ -99,7 +100,8 @@ public class CustomerController {
             , BindingResult bindingResult
             , @PathVariable Long id
             , RedirectAttributes redirectAttributes
-    ,@RequestParam("documentFile") MultipartFile documentFile) {
+            , @RequestParam("documentFile") MultipartFile documentFile,
+            @SessionAttribute("user") UserDto userDto) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(System.out::println);
             return "customers/edit";
@@ -116,7 +118,7 @@ public class CustomerController {
             return "redirect:/customers";
         }
         customer.setModifiedAt(LocalDateTime.now());
-        customer.setModifiedBy("admin");
+        customer.setModifiedBy(userDto.getUsername());
 
         if (!documentFile.isEmpty()) {
             try {

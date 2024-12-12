@@ -80,7 +80,7 @@ public class AuthController {
         Cookie cookie = new Cookie("userId", "");
         cookie.setMaxAge(0);
         response.addCookie(cookie);
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         session.invalidate();
         return "redirect:/login";
     }
