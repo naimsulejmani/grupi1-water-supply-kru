@@ -44,7 +44,7 @@
                         </div>
 
                         <div class="email mb-3">
-                            <label class="sr-only" for="name">Birthdate</label>
+                            <label class="" for="name">Birthdate</label>
                             <input th:field="*{birthdate}" type="date" class="form-control signup-name" placeholder="Phone" required="required"
                             min="1900-01-01" th:max="${maxDate}">
                         </div>
@@ -54,7 +54,7 @@
                         </div>
                         <div class="email mb-3">
                             <label class="sr-only" for="username">Username</label>
-                            <input th:field="*{username}" type="email" class="form-control signup-email" placeholder="Username" required="required">
+                            <input th:field="*{username}" type="text" class="form-control signup-email" placeholder="Username" required="required">
                         </div>
                         <div class="password mb-3">
                             <label class="sr-only" for="signup-password">Password</label>

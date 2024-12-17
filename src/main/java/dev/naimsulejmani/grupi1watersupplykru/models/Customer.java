@@ -52,6 +52,7 @@ public class Customer {
 
     @Column(nullable = false, length = 100)
     @Size(max = 100, message = "Shteti duhet te jete me shkruajt deri ne 100 karaktere!")
+    //@NotEqual(value = "Serbia", message = "Shteti nuk mund te jete Serbia!")
     private String state;
 
     @Column(nullable = false, length = 10)

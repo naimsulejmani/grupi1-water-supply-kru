@@ -1,6 +1,7 @@
 package dev.naimsulejmani.grupi1watersupplykru.models;
 
 import dev.naimsulejmani.grupi1watersupplykru.enums.MeterType;
+import dev.naimsulejmani.grupi1watersupplykru.infrastructure.validations.StartsWith;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class Meter {
     @Column(unique = true, nullable = false, length = 20)
     @Size(max = 20, message = "Serial number duhet te jete me shkruajt deri ne 20 karaktere!")
     @NotBlank(message = "Serial number nuk mund te jete i zbrazet!")
+//    @StartsWith(value = "XK-100", message = "Serial number duhet te filloj me 100!")
     private String serialNo; //serial_no
 
     @Column(nullable = false)

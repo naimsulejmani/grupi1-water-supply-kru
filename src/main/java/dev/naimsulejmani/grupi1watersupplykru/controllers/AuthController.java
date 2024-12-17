@@ -80,6 +80,25 @@ public class AuthController {
         return "auth/register";
     }
 
+    @PostMapping("/register")
+    public String register(@Valid @ModelAttribute RegisterUserRequestDto registerUserRequestDto,
+                           BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "auth/register";
+        }
+
+        if (!registerUserRequestDto.getPassword().equals(registerUserRequestDto.getConfirmPassword())) {
+            bindingResult.rejectValue("password", "error.registerUserRequestDto", "Passwordet nuk perputhen");
+            bindingResult.rejectValue("confirmPassword", "error.registerUserRequestDto", "Passwordet nuk perputhen");
+            return "auth/register";
+        }
+
+
+
+
+        return "redirect:/login";
+    }
+
     @PostMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         Cookie cookie = new Cookie("userId", "");

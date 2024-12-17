@@ -1,6 +1,8 @@
 package dev.naimsulejmani.grupi1watersupplykru.dtos;
 
+import dev.naimsulejmani.grupi1watersupplykru.infrastructure.validations.AgeBetween;
 import dev.naimsulejmani.grupi1watersupplykru.infrastructure.validations.AtLeast18Years;
+import dev.naimsulejmani.grupi1watersupplykru.infrastructure.validations.StartsWith;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,6 +40,7 @@ public class RegisterUserRequestDto {
     @Size(min=9,max = 20, message = "Phone should be between 9 and 20 characters")
     @NotBlank(message = "Phone should not be empty or blank")
     @NotNull(message = "Phone is required")
+    @StartsWith(value="+383", message = "Phone should start with +383")
     private String phone;
 
     @NotNull(message = "Birthdate is required")
