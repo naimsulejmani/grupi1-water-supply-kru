@@ -1,6 +1,9 @@
 package dev.naimsulejmani.grupi1watersupplykru.services.impls;
 
+import dev.naimsulejmani.grupi1watersupplykru.dtos.RegisterUserRequestDto;
 import dev.naimsulejmani.grupi1watersupplykru.dtos.UserDto;
+import dev.naimsulejmani.grupi1watersupplykru.exceptions.EmailExistException;
+import dev.naimsulejmani.grupi1watersupplykru.exceptions.UsernameExistException;
 import dev.naimsulejmani.grupi1watersupplykru.mappers.UserMapperImpl;
 import dev.naimsulejmani.grupi1watersupplykru.models.User;
 import dev.naimsulejmani.grupi1watersupplykru.repositories.UserRepository;
@@ -49,6 +52,20 @@ public class UserServiceImpl implements UserService {
         }
 
         return userMapperImpl.toDto(user);
+    }
+
+    @Override
+    public boolean register(RegisterUserRequestDto registerUserRequestDto) {
+        if(repository.findByUsername(registerUserRequestDto.getUsername()).isPresent()){
+            throw new UsernameExistException();
+        }
+        if(repository.findByEmail(registerUserRequestDto.getEmail()).isPresent()){
+            throw new EmailExistException();
+        }
+
+
+
+        return false;
     }
 }
 

@@ -1,5 +1,6 @@
 package dev.naimsulejmani.grupi1watersupplykru.mappers;
 
+import dev.naimsulejmani.grupi1watersupplykru.dtos.RegisterUserRequestDto;
 import dev.naimsulejmani.grupi1watersupplykru.dtos.UserDto;
 import dev.naimsulejmani.grupi1watersupplykru.dtos.UserListingDto;
 import dev.naimsulejmani.grupi1watersupplykru.infrastructure.Convert;
@@ -46,5 +47,18 @@ public class UserMapperImpl implements UserMapper {
         dto.setId(user.getId());
         dto.setUsername(user.getUsername());
         return dto;
+    }
+
+    @Override
+    public User userRequestDtoToUser(RegisterUserRequestDto registerUserRequestDto) {
+        User user = new User();
+        user.setUsername(registerUserRequestDto.getUsername());
+        user.setEmail(registerUserRequestDto.getEmail());
+        user.setName(registerUserRequestDto.getName());
+        user.setSurname(registerUserRequestDto.getSurname());
+        user.setRole(registerUserRequestDto.getRole());
+        user.setPhone(registerUserRequestDto.getPhone());
+        user.setBirthdate(registerUserRequestDto.getBirthdate());
+        return user;
     }
 }
