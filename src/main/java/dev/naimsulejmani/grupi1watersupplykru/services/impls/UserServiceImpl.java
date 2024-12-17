@@ -8,6 +8,7 @@ import dev.naimsulejmani.grupi1watersupplykru.mappers.UserMapperImpl;
 import dev.naimsulejmani.grupi1watersupplykru.models.User;
 import dev.naimsulejmani.grupi1watersupplykru.repositories.UserRepository;
 import dev.naimsulejmani.grupi1watersupplykru.services.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,10 +17,12 @@ import java.time.LocalDate;
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final UserMapperImpl userMapperImpl;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository repository, UserMapperImpl userMapperImpl) {
+    public UserServiceImpl(UserRepository repository, UserMapperImpl userMapperImpl, PasswordEncoder passwordEncoder) {
         this.repository = repository;
         this.userMapperImpl = userMapperImpl;
+        this.passwordEncoder = passwordEncoder;
 
         if (repository.count() == 0) {
             User user = new User();
@@ -56,16 +59,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean register(RegisterUserRequestDto registerUserRequestDto) {
-        if(repository.findByUsername(registerUserRequestDto.getUsername()).isPresent()){
+        if (repository.findByUsername(registerUserRequestDto.getUsername()).isPresent()) {
             throw new UsernameExistException();
         }
-        if(repository.findByEmail(registerUserRequestDto.getEmail()).isPresent()){
+        if (repository.findByEmail(registerUserRequestDto.getEmail()).isPresent()) {
             throw new EmailExistException();
         }
 
+        User user = userMapperImpl.userRequestDtoToUser(registerUserRequestDto);
+        user.setActive(true);
 
+        user.setPassword(passwordEncoder.encode(registerUserRequestDto.getPassword()));
 
-        return false;
+        repository.save(user);
+
+        return true;
     }
 }
 
