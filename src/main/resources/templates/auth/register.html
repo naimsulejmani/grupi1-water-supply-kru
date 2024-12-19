@@ -33,43 +33,52 @@
                         <div class="email mb-3">
                             <label class="sr-only" for="name">Name</label>
                             <input th:field="*{name}" type="text" class="form-control signup-name" placeholder="Name" required="required">
+                            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red"></div>
                         </div>
                         <div class="email mb-3">
                             <label class="sr-only" for="name">Surname</label>
                             <input th:field="*{surname}" type="text" class="form-control signup-name" placeholder="Surname" required="required">
+                            <div th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}" style="color:red"></div>
                         </div>
                         <div class="email mb-3">
                             <label class="sr-only" for="name">Phone</label>
                             <input th:field="*{phone}" type="text" class="form-control signup-name" placeholder="Phone" required="required">
+                            <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" style="color:red"></div>
                         </div>
 
                         <div class="email mb-3">
                             <label class="" for="name">Birthdate</label>
                             <input th:field="*{birthdate}" type="date" class="form-control signup-name" placeholder="Phone" required="required"
                             min="1900-01-01" th:max="${maxDate}">
+                            <div th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}" style="color:red"></div>
                         </div>
                         <div class="email mb-3">
                             <label class="sr-only" for="email">Your Email</label>
                             <input th:field="*{email}" type="email" class="form-control signup-email" placeholder="Email" required="required">
+                            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red"></div>
                         </div>
                         <div class="email mb-3">
                             <label class="sr-only" for="username">Username</label>
                             <input th:field="*{username}" type="text" class="form-control signup-email" placeholder="Username" required="required">
+                            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color:red"></div>
                         </div>
                         <div class="password mb-3">
                             <label class="sr-only" for="signup-password">Password</label>
                             <input th:field="*{password}" type="password" class="form-control signup-password" placeholder="Create a password" required="required">
+                            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red"></div>
                         </div>
                         <div class="password mb-3">
                             <label class="sr-only" for="signup-password">Confirm Password</label>
                             <input th:field="*{confirmPassword}" type="password" class="form-control signup-password" placeholder="Confirm password" required="required">
+                            <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" style="color:red"></div>
                         </div>
                         <div class="extra mb-3">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="RememberPassword">
-                                <label class="form-check-label" for="RememberPassword">
+                                <input class="form-check-input" type="checkbox" value="" th:field="*{acceptTerms}" required>
+                                <label class="form-check-label" for="acceptTerms">
                                     I agree to Portal's <a href="#" class="app-link">Terms of Service</a> and <a href="#" class="app-link">Privacy Policy</a>.
                                 </label>
+                                <div th:if="${#fields.hasErrors('acceptTerms')}" th:errors="*{acceptTerms}" style="color:red"></div>
                             </div>
                         </div><!--//extra-->
 

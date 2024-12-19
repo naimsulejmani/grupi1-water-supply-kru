@@ -37,30 +37,34 @@ public class RegisterUserRequestDto {
     private String surname;
     private String role = "CUSTOMER";
 
-    @Size(min=9,max = 20, message = "Phone should be between 9 and 20 characters")
+    @Size(min = 9, max = 20, message = "Phone should be between 9 and 20 characters")
     @NotBlank(message = "Phone should not be empty or blank")
     @NotNull(message = "Phone is required")
-    @StartsWith(value="+383", message = "Phone should start with +383")
+    @StartsWith(value = "+383", message = "Phone should start with +383")
     private String phone;
 
     @NotNull(message = "Birthdate is required")
     @Past(message = "Birthdate should be in the past")
     @AtLeast18Years(message = "You should be at least 18 years old")
-    @AgeBetween(min=18, max=64, message = "You should be between 18 and 64 years old")
+    @AgeBetween(min = 18, max = 64, message = "You should be between 18 and 64 years old")
     private LocalDate birthdate;
 
-    @Size(min=6, max=100, message = "Password should be between 6 and 100 characters")
+    @Size(min = 6, max = 100, message = "Password should be between 6 and 100 characters")
     @NotBlank(message = "Password should not be empty or blank")
     @NotNull(message = "Password is required")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$", message = "Password should contain at least one uppercase letter, one lowercase letter and one digit")
     private String password;
 
-    @Size(min=6, max=100, message = "Password should be between 6 and 100 characters")
+    @Size(min = 6, max = 100, message = "Password should be between 6 and 100 characters")
     @NotBlank(message = "Password should not be empty or blank")
     @NotNull(message = "Password is required")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$", message = "Password should contain at least one uppercase letter, one lowercase letter and one digit")
     //@SameAs('password', message = "Passwords should match")
     private String confirmPassword;
+
+
+    @AssertTrue(message = "You should accept the terms and conditions")
+    private boolean acceptTerms;
 }
 
 

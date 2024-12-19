@@ -2,6 +2,8 @@ package dev.naimsulejmani.grupi1watersupplykru.controllers;
 
 import dev.naimsulejmani.grupi1watersupplykru.dtos.LoginRequestDto;
 import dev.naimsulejmani.grupi1watersupplykru.dtos.RegisterUserRequestDto;
+import dev.naimsulejmani.grupi1watersupplykru.exceptions.EmailExistException;
+import dev.naimsulejmani.grupi1watersupplykru.exceptions.UsernameExistException;
 import dev.naimsulejmani.grupi1watersupplykru.services.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -93,7 +95,17 @@ public class AuthController {
             return "auth/register";
         }
 
-
+        try {
+            userService.register(registerUserRequestDto);
+        } catch (UsernameExistException e) {
+            bindingResult.rejectValue("username", "error.registerUserRequestDto",
+                    "Ky username ekziston");
+            return "auth/register";
+        } catch (EmailExistException e) {
+            bindingResult.rejectValue("email", "error.registerUserRequestDto",
+                    "Ky email ekziston");
+            return "auth/register";
+        }
 
 
         return "redirect:/login";
