@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -94,5 +95,12 @@ public class Customer {
     @Size(max = 50)
     private String modifiedBy;
 
+
+    @OneToMany(mappedBy = "customer")
+    private List<Meter> meters;
+    //customerRepository.findById(1);
+    //SELECT * FROM Customers WHERE id=1;
+    //SELECT * FROM meters WHERE customer_id=1;
+    //customerRepository.findById(1).getMeters();
 
 }

@@ -73,4 +73,9 @@ public class Meter {
     @Size(max = 25)
     private String modifiedBy;
 
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
 }
