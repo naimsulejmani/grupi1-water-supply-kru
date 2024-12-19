@@ -3,7 +3,9 @@ package dev.naimsulejmani.grupi1watersupplykru.services.impls;
 import dev.naimsulejmani.grupi1watersupplykru.dtos.RegisterUserRequestDto;
 import dev.naimsulejmani.grupi1watersupplykru.dtos.UserDto;
 import dev.naimsulejmani.grupi1watersupplykru.exceptions.EmailExistException;
+import dev.naimsulejmani.grupi1watersupplykru.exceptions.UserNotFoundException;
 import dev.naimsulejmani.grupi1watersupplykru.exceptions.UsernameExistException;
+import dev.naimsulejmani.grupi1watersupplykru.exceptions.WrongPasswordException;
 import dev.naimsulejmani.grupi1watersupplykru.mappers.UserMapperImpl;
 import dev.naimsulejmani.grupi1watersupplykru.models.User;
 import dev.naimsulejmani.grupi1watersupplykru.repositories.UserRepository;
@@ -24,21 +26,21 @@ public class UserServiceImpl implements UserService {
         this.userMapperImpl = userMapperImpl;
         this.passwordEncoder = passwordEncoder;
 
-        if (repository.count() == 0) {
-            User user = new User();
-            user.setEmail("naim.sulejmani@gmail.com");
-            user.setActive(true);
-            user.setName("Naim");
-            user.setSurname("Sulejmani");
-            user.setBirthdate(LocalDate.parse("1986-12-16"));
-            user.setRole("ROLE_ADMIN");
-            user.setPhone("049111111");
-            user.setPassword("Admin123");
-            user.setUsername("naimsulejmani");
-
-            repository.save(user);
-
-        }
+//        if (repository.count() == 0) {
+//            User user = new User();
+//            user.setEmail("naim.sulejmani@gmail.com");
+//            user.setActive(true);
+//            user.setName("Naim");
+//            user.setSurname("Sulejmani");
+//            user.setBirthdate(LocalDate.parse("1986-12-16"));
+//            user.setRole("ROLE_ADMIN");
+//            user.setPhone("049111111");
+//            user.setPassword("Admin123");
+//            user.setUsername("naimsulejmani");
+//
+//            repository.save(user);
+//
+//        }
     }
 
     @Override
@@ -46,12 +48,10 @@ public class UserServiceImpl implements UserService {
         User user = repository.findByEmail(email).orElse(null);
 
         if (user == null) {
-            System.out.println("User not found");
-            return null; // throw new InvalidCredentialsException("User not found");
+            throw new UserNotFoundException();
         }
-        if (!user.getPassword().equals(password)) {
-            System.out.println("Password incorrect");
-            return null; // throw new InvalidCredentialsException("Wrong password");
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new WrongPasswordException();
         }
 
         return userMapperImpl.toDto(user);

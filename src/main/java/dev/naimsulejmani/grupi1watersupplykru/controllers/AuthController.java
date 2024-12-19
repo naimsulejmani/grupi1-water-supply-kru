@@ -3,7 +3,9 @@ package dev.naimsulejmani.grupi1watersupplykru.controllers;
 import dev.naimsulejmani.grupi1watersupplykru.dtos.LoginRequestDto;
 import dev.naimsulejmani.grupi1watersupplykru.dtos.RegisterUserRequestDto;
 import dev.naimsulejmani.grupi1watersupplykru.exceptions.EmailExistException;
+import dev.naimsulejmani.grupi1watersupplykru.exceptions.UserNotFoundException;
 import dev.naimsulejmani.grupi1watersupplykru.exceptions.UsernameExistException;
+import dev.naimsulejmani.grupi1watersupplykru.exceptions.WrongPasswordException;
 import dev.naimsulejmani.grupi1watersupplykru.services.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,28 +47,33 @@ public class AuthController {
             return "auth/login";
         }
 
-        var userDto = userService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
+        try {
+            var userDto = userService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
 
-        if (userDto == null) {
-            bindingResult.rejectValue("email", "error.loginRequestDto", "Emaili ose passwordi i gabuar!");
-            bindingResult.rejectValue("password", "error.loginRequestDto", "Emaili ose passwordi i gabuar!");
+
+            HttpSession session = request.getSession();
+            session.setAttribute("user", userDto);
+
+            Cookie cookie = new Cookie("userId", "" + userDto.getId());
+            if (loginRequestDto.isRememberMe()) {
+                cookie.setMaxAge(60 * 60 * 24 * 30); // 30 days
+            } else {
+                cookie.setMaxAge(60 * 60); // 1 hour
+            }
+
+            response.addCookie(cookie);
+            if (returnUrl == null || returnUrl.isBlank())
+                return "redirect:/";
+            return "redirect:" + returnUrl;
+        } catch (UserNotFoundException e) {
+            bindingResult.rejectValue("email", "error.loginRequestDto",
+                   "User with this email does not exist");
+            return "auth/login";
+        } catch (WrongPasswordException e) {
+            bindingResult.rejectValue("password", "error.loginRequestDto",
+                    e.getMessage());
             return "auth/login";
         }
-
-        HttpSession session = request.getSession();
-        session.setAttribute("user", userDto);
-
-        Cookie cookie = new Cookie("userId", "" + userDto.getId());
-        if (loginRequestDto.isRememberMe()) {
-            cookie.setMaxAge(60 * 60 * 24 * 30); // 30 days
-        } else {
-            cookie.setMaxAge(60 * 60); // 1 hour
-        }
-
-        response.addCookie(cookie);
-        if (returnUrl == null || returnUrl.isBlank())
-            return "redirect:/";
-        return "redirect:" + returnUrl;
     }
 
 
